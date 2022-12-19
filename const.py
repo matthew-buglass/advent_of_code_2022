@@ -1,3 +1,6 @@
+import os
+
+
 class color:
    PURPLE = '\033[95m'
    CYAN = '\033[96m'
@@ -13,4 +16,8 @@ class color:
 
 def flatten(l: list):
    return [item for sublist in l for item in sublist]
+
+
+def clear_terminal():
+   os.system('cls' if os.name == 'nt' else 'clear')
 
