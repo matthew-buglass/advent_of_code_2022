@@ -31,8 +31,9 @@ class RockFormation:
             start = [int(co_ord) for co_ord in traces[i].split(',')]
             end = [int(co_ord) for co_ord in traces[i+1].split(',')]
             self.locations += get_positions_in_line(
-                (start[0], start[1]),
-                (end[0], end[1])
+                # Reversing input rows and columns so that they will index correctly
+                (start[1], start[0]),
+                (end[1], end[0])
             )
 
             self.min_col = min(self.min_col, start[0], end[0])
@@ -40,7 +41,7 @@ class RockFormation:
             self.max_row = max(self.max_row, start[1], end[1])
 
     def get_normalized_coordinates(self, min_col):
-        return [(r, c - min_col) for c, r in self.locations]
+        return [(r, c - min_col) for r, c in self.locations]
 
 
 class RockFace:
@@ -63,7 +64,7 @@ class RockFace:
         normalized_rocks = flatten([form.get_normalized_coordinates(self.min_col) for form in self.rock_formations])
         norm_sand_start_row, norm_sand_start_col = self.sand_start[1], self.sand_start[0] - self.min_col
 
-        num_rows, num_cols = self.max_col - self.min_col + 1, self.max_row + 1
+        num_rows, num_cols = self.max_row + 1, self.max_col - self.min_col + 1
 
         current_formation = [[air_sym for _ in range(num_cols)] for _ in range(num_rows)]
 
