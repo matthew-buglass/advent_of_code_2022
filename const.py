@@ -1,4 +1,5 @@
 import os
+import sys
 
 
 class color:
@@ -21,3 +22,9 @@ def flatten(l: list):
 def clear_terminal():
    os.system('cls' if os.name == 'nt' else 'clear')
 
+
+def write_chunks(string, chunk_size):
+   out = sys.stdout
+   for i in range(0, len(string), chunk_size):
+      end_idx = min(i+chunk_size, len(string))
+      out.write(string[i: end_idx])
